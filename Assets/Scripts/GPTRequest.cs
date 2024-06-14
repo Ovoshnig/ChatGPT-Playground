@@ -15,8 +15,8 @@ public class OpenAIChat : MonoBehaviour
     [SerializeField] private Button _sendButton;
     [SerializeField] private TMP_Text _responseText;
 
-    private const string ApiKey = "sk-proj-KjGnvcxbf7xIJlH2jnblT3BlbkFJnj6k1HeLs3DOFhNp9N8U";
-    private const string ProxyString = "193.187.97.136:63392:4jkwhpTd:2G59HhrL";
+    private const string ApiKey = "";
+    private const string ProxyString = "";
 
     private void Start()
     {
@@ -53,7 +53,7 @@ public class OpenAIChat : MonoBehaviour
         var asyncChatUpdates = chatClient.CompleteChatStreamingAsync(
             new ChatMessage[]
             {
-                new UserChatMessage("Напиши перцептрон на Python с Keras")
+                new UserChatMessage("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ Python пїЅ Keras")
             });
 
         Console.WriteLine($"[ASSISTANT]:");

@@ -3,14 +3,19 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(OpenAIRequest))]
 public class ChatUI : MonoBehaviour
 {
     [SerializeField] private float _printDelay;
     [SerializeField] private TMP_InputField _inputField;
-    [SerializeField] private TMP_Text _answerText;
-    [SerializeField] private Button _doneButton;
+    [SerializeField] private Button _sendButton;
+    [SerializeField] private TMP_Text _responseText;
 
-    private void Start() => _doneButton.onClick.AddListener(() => OnDoneButtonClick().Forget());
+    private OpenAIRequest _openAIRequest;
+
+    private void Awake() => _openAIRequest = GetComponent<OpenAIRequest>();
+
+    private void Start() => _sendButton.onClick.AddListener(() => OnDoneButtonClick().Forget());
 
     private async UniTask OnDoneButtonClick()
     {
@@ -20,13 +25,7 @@ public class ChatUI : MonoBehaviour
             return;
         }
 
-        _answerText.text = "";
-        string answer = await OpenAIRequest.MakeRequest(_inputField.text);
-
-        foreach (char symbol in answer)
-        {
-            _answerText.text += symbol;
-            await UniTask.WaitForSeconds(_printDelay);
-        }
+        _responseText.text = "";
+        await _openAIRequest.MakeStreamingRequest(_inputField.text, message => _responseText.text += message);
     }
 }
